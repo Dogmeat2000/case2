@@ -1,0 +1,59 @@
+name: Update Security Badges
+
+on:
+  schedule:
+    - cron: '0 * * * *' # Updates every hour automatically
+  workflow_run:
+    workflows: ["trivy", "SonarCloud analysis"] # Or update immediately when your scans finish
+    types: [completed]
+  workflow_dispatch: # Allows manual click trigger
+
+jobs:
+  update-counts:
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: read
+      vulnerability-alerts: read  # Required to read Dependabot alerts
+      
+    steps:
+      - name: Fetch Dependabot and Trivy Alert Counts
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # 1. Fetch Dependabot raw output and explicitly handle blank responses
+          RAW_DEP=$(gh api repos/${{ github.repository }}/dependabot/alerts?state=open 2>/dev/null || echo "")
+          if [ -z "$RAW_DEP" ] || [ "$RAW_DEP" = "[]" ]; then
+            echo "DEPENDABOT_COUNT=0" >> $GITHUB_ENV
+          else
+            DEP_LEN=$(echo "$RAW_DEP" | jq '. | length' 2>/dev/null || echo "0")
+            echo "DEPENDABOT_COUNT=$DEP_LEN" >> $GITHUB_ENV
+          fi
+
+          # 2. Fetch Trivy raw output and explicitly handle blank responses
+          RAW_TRIVY=$(gh api repos/${{ github.repository }}/code-scanning/alerts?tool_name=Trivy&state=open 2>/dev/null || echo "")
+          if [ -z "$RAW_TRIVY" ] || [ "$RAW_TRIVY" = "[]" ]; then
+            echo "TRIVY_COUNT=0" >> $GITHUB_ENV
+          else
+            TRIVY_LEN=$(echo "$RAW_TRIVY" | jq '. | length' 2>/dev/null || echo "0")
+            echo "TRIVY_COUNT=$TRIVY_LEN" >> $GITHUB_ENV
+          fi
+
+      - name: Update Dependabot Badge Data
+        uses: Schneegans/dynamic-badges-action@v1.8.0
+        with:
+          auth: ${{ secrets.GIST_SECRET }}
+          gistID: 866c8a4d1b81b16604e625af0368cd13
+          filename: dependabot-count_case2.json
+          label: Dependabot Alerts
+          message: ${{ env.DEPENDABOT_COUNT }}
+          color: ${{ env.DEPENDABOT_COUNT > 0 && 'red' || 'green' }}
+
+      - name: Update Trivy Badge Data
+        uses: Schneegans/dynamic-badges-action@v1.8.0
+        with:
+          auth: ${{ secrets.GIST_SECRET }}
+          gistID: 866c8a4d1b81b16604e625af0368cd13
+          filename: trivy-count_case2.json
+          label: Trivy Alerts
+          message: ${{ env.TRIVY_COUNT }}
+          color: ${{ env.TRIVY_COUNT > 0 && 'red' || 'green' }}
