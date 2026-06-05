@@ -14,8 +14,8 @@ This project leverages automated continuous integration workflows to scan for co
 
 ## 📦 Software Supply Chain & Dependency Analysis (SCA)
 
-| Vulnerability Vector | Automation Status | Direct Dashboard Links |
+| Vulnerability Vector | Current Active Count | Direct Dashboard Links |
 | :--- | :---: | :--- |
-| **Trivy Container/FS Scanner** | [![Trivy Security Pipeline](https://github.com/Dogmeat2000/case2/actions/workflows/trivy.yml/badge.svg)](https://github.com/Dogmeat2000/case2/actions/workflows/trivy.yml) | [View Trivy Code Scanning Alerts](https://github.com/Dogmeat2000/case2/security/code-scanning) |
-| **GitHub Dependabot** | ![Dependabot Enabled](https://img.shields.io/badge/Dependabot-Active-blue?style=flat&logo=dependabot) | [Review Active Dependabot Alerts](https://github.com/Dogmeat2000/case2/security/dependabot) |
+| **Trivy Container/FS Scanner** | ![Trivy Alerts Count](https://img.shields.io/endpoint?url=https%3A%2F%2Fgist.githubusercontent.com%2FDogmeat2000%2F866c8a4d1b81b16604e625af0368cd13%2Fraw%2Ftrivy-count_case2.json&cacheBust=1) | [View Trivy Code Scanning Alerts](https://github.com/Dogmeat2000/case2/security/code-scanning) |
+| **GitHub Dependabot** | ![Dependabot Alerts Count](https://img.shields.io/endpoint?url=https%3A%2F%2Fgist.githubusercontent.com%2FDogmeat2000%2F866c8a4d1b81b16604e625af0368cd13%2Fraw%2Fdependabot-count_case2.json&cacheBust=1) | [Review Active Dependabot Alerts](https://github.com/Dogmeat2000/case2/security/dependabot) |
 | **Supply Chain Malware** | ![Malware Protection Enabled](https://img.shields.io/badge/Malware--Scan-Active-success?style=flat&logo=github) | [Review Repository Malware Status](https://github.com/Dogmeat2000/case2/security/malware) |
