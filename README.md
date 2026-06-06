@@ -1,8 +1,10 @@
-# 🛡️ Automated Security & Quality Telemetry
+# Case 2: Input Validation Testing
+
+## 🛡️ Automated Security & Quality Telemetry
 
 This project leverages automated continuous integration workflows to scan for code quality, architectural degradation, and supply chain security vulnerabilities on every push to the main branch.
 
-## 📊 Static Application Security Testing (SAST)
+### 📊 Static Application Security Testing (SAST)
 
 | Analysis Engine | Quality Gate Status | Security Rating | Code Smells | Open Vulnerabilities |
 | :--- | :---: | :---: | :---: | :---: |
@@ -12,7 +14,7 @@ This project leverages automated continuous integration workflows to scan for co
 
 ---
 
-## 📦 Software Supply Chain & Dependency Analysis (SCA)
+### 📦 Software Supply Chain & Dependency Analysis (SCA)
 
 | Vulnerability Vector | Current Active Count | Direct Dashboard Links |
 | :--- | :---: | :--- |
